@@ -1,0 +1,28 @@
+name: Anyway job
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  Anyway:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Something
+      run: echo "Do something"
+    - name: Send email in case of failure
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: ${{secrets.MAIL_SERVER_ADDRESS}}
+        server_port: ${{secrets.MAIL_SERVER_PORT}}
+        username: ${{secrets.MAIL_USERNAME}}
+        password: ${{secrets.MAIL_PASSWORD}}
+        subject: Github - Anyway job
+        to: ${{secrets.MAIL_TO}}
+        from: Github - gabrielrufino/app-githubactions-email
+        secure: ${{secrets.MAIL_SECURE}}
+        body: Validation job of ${{github.repository}} has finished!
+        ignore_cert: true
+        priority: low
