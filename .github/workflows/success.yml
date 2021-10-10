@@ -1,0 +1,29 @@
+name: Success job
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  Success:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Simulated success
+      run: echo "Success"
+    - name: Send email in case of failure
+      if: failure() 
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: ${{secrets.MAIL_SERVER_ADDRESS}}
+        server_port: ${{secrets.MAIL_SERVER_PORT}}
+        username: ${{secrets.MAIL_USERNAME}}
+        password: ${{secrets.MAIL_PASSWORD}}
+        subject: Github - Success job
+        to: ${{secrets.MAIL_TO}}
+        from: Github - gabrielrufino/app-githubactions-email
+        secure: ${{secrets.MAIL_SECURE}}
+        body: Success job of ${{github.repository}} has success!
+        ignore_cert: true
+        priority: normal
