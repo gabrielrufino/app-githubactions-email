@@ -12,7 +12,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Something
       run: echo "Do something"
-    - name: Send email in case of failure
+    - name: Send email in any case
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: ${{secrets.MAIL_SERVER_ADDRESS}}
@@ -23,6 +23,6 @@ jobs:
         to: ${{secrets.MAIL_TO}}
         from: Github - gabrielrufino/app-githubactions-email
         secure: ${{secrets.MAIL_SECURE}}
-        body: Validation job of ${{github.repository}} has finished!
+        body: Anyway job of ${{github.repository}} has finished!
         ignore_cert: true
         priority: low
